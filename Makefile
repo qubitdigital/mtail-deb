@@ -1,6 +1,6 @@
 TARGET=deb
 PACKAGE_NAME=mtail
-PACKAGE_VERSION=0.1.0
+PACKAGE_VERSION=0.1.1
 PACKAGE_REVISION=1
 PACKAGE_ARCH=amd64
 PACKAGE_MAINTAINER=tristan@qubit.com
@@ -14,7 +14,7 @@ PWD=$(shell pwd)
 
 all: package
 
-bianry: clean-bianry
+binary: clean-binary
 	mkdir -p build/go/src
 	mkdir -p build/$(PACKAGE_NAME)
 	export GOPATH=$(PWD)/build/go && go get -d github.com/google/mtail
@@ -24,15 +24,15 @@ bianry: clean-bianry
 
 	mkdir -p dist/etc/init
 	mkdir -p dist/etc/default
-	mkdir -p dist/etc/mtail.d
-	touch dist/etc/mtail.d/.dir
+	install -m755 -d mtail.d dist/etc/mtail.d
+	for file in mtail.d/*.mtail;do install -m 755 "$$file" dist/etc/"$$file" ; done
 	install -m644 $(BINNAME).conf dist/etc/init/$(BINNAME).conf
 	install -m644 $(BINNAME).defaults dist/etc/default/$(BINNAME)
 
-clean-bianry:
+clean-binary:
 	rm -f dist/usr/local/bin/$(BINNAME)
 
-package: clean bianry
+package: clean binary
 	cd dist && \
 	  fpm \
 	  -t $(TARGET) \
