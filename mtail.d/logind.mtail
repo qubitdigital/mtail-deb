@@ -1,0 +1,12 @@
+counter logind_created_sessions_total by username
+counter logind_removed_sessions_total
+
+# Removed session 234.
+# New session 239 of user ubuntu.
+/^New session \d+ of user (?P<username>\w+)\./ {
+	logind_created_sessions_total[$username]++
+}
+
+/^Removed session \d+\./ {
+	logind_removed_sessions_total++
+}

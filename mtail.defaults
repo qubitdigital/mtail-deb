@@ -1,0 +1,3 @@
+MTAIL_FLAGS=""
+# This is a posix-extended regex passed to find. Only files under /var/log are included
+FILESREGEX='/var/log/(syslog|messages|cron.log|mail.log|auth.log|kern.log|monit.log|upstart/.+.log)'

@@ -1,0 +1,5 @@
+counter mtail_parsed_log_lines_total
+
+//{
+  mtail_parsed_log_lines_total++
+}

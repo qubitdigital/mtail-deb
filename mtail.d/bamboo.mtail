@@ -1,0 +1,9 @@
+# Copyright 2011 Google Inc. All Rights Reserved.
+# This file is available under the Apache license.
+
+counter bamboo_configuration_reload_total
+
+#2016/10/05 12:48:14 Reloaded HAProxy configuration
+/^(?P<date>\d+\/\d+\/\d+\/\s+\d+:\d+:\d+)\s+Reloaded HAProxy configuration/ {
+    bamboo_configuration_reload_total++
+}

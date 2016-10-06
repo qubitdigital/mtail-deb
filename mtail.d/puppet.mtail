@@ -1,0 +1,20 @@
+gauge puppet_last_run_timestamp
+gauge puppet_last_run_duration_seconds
+counter puppet_runs_total by status
+
+#Oct  5 13:58:01.000 bass00.stg.irl.aws.quborg.com puppet-agent[4569]: Skipping run of Puppet configuration client; administratively disabled (Reason: 'reason not specified');
+/^(?P<date>\w+\s+\d+\s+\d+:\d+:\d+)\.\d+\s+\S+\s+puppet-agent\[\d+\]:/ {
+    strptime($date, "Jan 2 15:04:05")
+    /Retrieving pluginfacts/{
+        puppet_last_run_timestamp = timestamp()
+    }
+
+    /Finished catalog run in (?P<duration>\d+)\.\d+ seconds$/ {
+        puppet_last_run_duration_seconds = $duration
+        puppet_runs_total["finished"]++
+    }
+
+    /Skipping run of Puppet configuration client/ {
+        puppet_runs_total["skipped"]++
+    }
+}

@@ -1,0 +1,6 @@
+counter kernel_oom_killer_invocations_total by process
+
+# Oct  3 14:38:38.050 bass00.stg.irl.aws.quborg.com kernel: prometheus invoked oom-killer: gfp_mask=0xd0, order=0, oom_score_adj=0
+/^\w+\s+\d+\s+\d+:\d+:\d+.+ kernel: (?P<process>\w+) invoked oom-killer: .+$/ {
+	kernel_oom_killer_invocations_total[$process]++
+}

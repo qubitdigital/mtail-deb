@@ -1,0 +1,9 @@
+gauge cron_job_last_run_timestamp by command,user
+
+#Sep 30 10:14:01.000 bass00.stg.irl.aws.quborg.com CRON[22703]: (ubuntu) CMD (service bamboo-server restart 2>&1 >/dev/null)
+
+/^(?P<date>\w+\s+\d+\s+\d+:\d+:\d+)\..+ CRON\[\d+\]: \((?P<user>\w+)\) CMD \((?P<cmd>.+)\)$/ {
+    strptime($date, "Jan 2 15:04:05")
+    cron_job_last_run_timestamp[$cmd][$user] = timestamp()
+}
+
