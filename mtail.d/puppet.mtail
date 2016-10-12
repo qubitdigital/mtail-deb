@@ -19,7 +19,10 @@ counter puppet_runs_total by status
         puppet_runs_total["finished"]++
     }
 
+    /Skipping run of Puppet configuration client/ {
+        puppet_runs_total["skipped-disabled"]++
+    }
     /skipping run$/ {
-        puppet_runs_total["skipped"]++
+        puppet_runs_total["skipped-failed"]++
     }
 }
