@@ -1,4 +1,4 @@
-gauge puppet_last_run_timestamp
+gauge puppet_last_run_timestamp by source
 gauge puppet_last_run_duration_seconds
 counter puppet_runs_total by status
 
